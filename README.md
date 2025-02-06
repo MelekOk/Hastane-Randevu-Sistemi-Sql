@@ -1,23 +1,37 @@
 Hastane Randavu Sistemi
 
 Bu proje, bir sağlık yönetim sistemi için tasarlanmış SQL tabanlı bir uygulamadır.
+
 Sistem, hastalar, doktorlar, departmanlar ve randevularla ilgili verilerin yönetilmesine olanak sağlar. 
+
 Kullanıcılar, yeni hastalar ekleyebilir, mevcut hastaları güncelleyebilir ve silebilir. Ayrıca doktorlar ve departmanlar arasında ilişkiler kurarak randevu alabilirler.
 
+
 -------Özellikler-------
+
 Hastalar: Yeni hasta ekleme, mevcut hasta bilgilerini güncelleme ve silme işlemleri.
+
 Doktorlar: Yeni doktor ekleme, doktor bilgilerini güncelleme ve silme işlemleri.
+
 Departmanlar: Yeni departman ekleme ve mevcut departmanları güncelleme.
+
 Randevular: Hastalar için randevu oluşturma, randevu güncelleme ve randevu silme işlemleri.
+
 Stored Procedures: Veritabanı işlemleri için kullanılan çeşitli prosedürler (ekleme, güncelleme, silme vb.).
 
+
 -------Kullanılan Teknolojiler-------
+
 Veritabanı: SQL 
+
 Stored Procedures: SQL prosedürleri ile veri yönetimi
+
 T-SQL: Veri işleme ve hata yönetimi
 
 -------Kurulum-------
+
 1)Bu projeyi GitHub'dan klonlayın:
+
 bash
 Kopyala
 Düzenle
