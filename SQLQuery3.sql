@@ -1,9 +1,7 @@
---Hastalar view i oluşturuldu.
 create view Hastalar
 as
 select Id,Name,Surname,TcNo,Age,Gender,IsDelete from Patient
 
---insert işlemi için proc oluşturuldu
 alter proc HastalarInsertIslemi
 @HastalarName nvarchar(50),
 @HastalarSurname nvarchar(50),
@@ -13,9 +11,7 @@ alter proc HastalarInsertIslemi
 as
 begin
 
---Hata ayıklamak için try catch kullanıldı.
 begin try
---İşlemde hata oluşursa geri almak için tran kullanıldı.
 begin tran IslemControl
 
 
@@ -28,12 +24,11 @@ commit tran IslemControl
 end try
 begin catch
 	rollback tran IslemControl
-	print 'Yapılan İşlemler Geri Alındı.'
+	print 'Yapilan islemler Geri Alindi.'
 end catch
 
 end
-
---Update işlemi için proc oluşturuldu
+	
 alter proc HastalarUpdateIslemi
 @HastalarId int,
 @HastalarName nvarchar(50),
@@ -51,22 +46,21 @@ begin
 	update Hastalar set Name=@HastalarName,Surname=@HastalarSurname,TcNo=@HastalarTcNo,Age=@HastalarAge,Gender=@HastalarGender
 	where Id=@HastalarId 
 
-	print 'Hasta Bilgileri Güncellendi.'
+	print 'Hasta Bilgileri GÃ¼ncellendi.'
 end
 else
 begin
-    print 'Güncelleme yapılmadı: Belirtilen HastalarId değeri mevcut değil.'
+    print 'GÃ¼ncelleme yapÃ½lmadÃ½: Belirtilen HastalarId deÃ°eri mevcut deÃ°il.'
 end
 
 commit tran IslemControl
 end try
 begin catch
 	rollback tran IslemControl
-	print 'Yapılan İşlemler Geri Alındı.'
+	print 'YapÃ½lan ÃÃ¾lemler Geri AlÃ½ndÃ½.'
 end catch
 end
 
---Delete işlemi için proc oluşturuldu
 alter proc HastalarDeleteIslemi
 @HastalarId int
 as
@@ -83,20 +77,20 @@ begin
 end
 else
 begin
-    print 'Silme yapılmadı: Belirtilen HastalarId değeri mevcut değil.'
+    print 'Silme yapÃ½lmadÃ½: Belirtilen HastalarId deÃ°eri mevcut deÃ°il.'
 end
 
 commit tran IslemControl
 end try
 begin catch
 	rollback tran IslemControl
-	print 'Yapılan İşlemler Geri Alındı.'
+	print 'YapÃ½lan ÃÃ¾lemler Geri AlÃ½ndÃ½.'
 end catch
 end
 
 exec HastalarInsertIslemi 'Ali','Ekin','12345678906',58,'Erkek'
 
-exec HastalarUpdateIslemi 2,'Gamze','Yıldız','12345678905',29,'Kadın'
+exec HastalarUpdateIslemi 2,'Gamze','YÃ½ldÃ½z','12345678905',29,'Kadin'
 
 exec HastalarDeleteIslemi  12
 
@@ -106,16 +100,13 @@ alter view Doktorlar
 as
 select Id,Name,Surname,IsDelete from Doctor
 
---insert işlemi için proc oluşturuldu
 alter proc DoktorlarInsertIslemi
 @DoktorlarName nvarchar(50),
 @DoktorlarSurname nvarchar(50)
 as
 begin
 
---Hata ayıklamak için try catch kullanıldı.
 begin try
---İşlemde hata oluşursa geri almak için tran kullanıldı.
 begin tran IslemControl
 
 	insert into Doktorlar(Name,Surname) 
@@ -127,7 +118,7 @@ commit tran IslemControl
 end try
 begin catch
 	rollback tran IslemControl
-	print 'Yapılan İşlemler Geri Alındı.'
+	print 'YapÃ½lan ÃÃ¾lemler Geri AlÃ½ndÃ½.'
 end catch
 end
 
@@ -147,22 +138,21 @@ begin
 	update Doktorlar set Name=@DoktorlarName,Surname=@DoktorlarSurname
 	where Id=@DoktorlarId 
 
-	print 'Doktor Bilgileri Güncellendi.'
+	print 'Doktor Bilgileri GÃ¼ncellendi.'
 end
 else
 begin
-    print 'Güncelleme yapılmadı: Belirtilen DoktorlarId değeri mevcut değil.'
+    print 'GÃ¼ncelleme yapÃ½lmadÃ½: Belirtilen DoktorlarId deÃ°eri mevcut deÃ°il.'
 end
 
 commit tran IslemControl
 end try
 begin catch
 	rollback tran IslemControl
-	print 'Yapılan İşlemler Geri Alındı.'
+	print 'YapÃ½lan ÃÃ¾lemler Geri AlÃ½ndÃ½.'
 end catch
 end
 
---Delete işlemi için proc oluşturuldu
 alter proc DoktorlarDeleteIslemi
 @DoktorlarId int
 as
@@ -179,22 +169,22 @@ begin
 end
 else
 begin
-    print 'Silme yapılmadı: Belirtilen DoktorlarId değeri mevcut değil.'
+    print 'Silme yapÃ½lmadÃ½: Belirtilen DoktorlarId deÃ°eri mevcut deÃ°il.'
 end
 
 commit tran IslemControl
 end try
 begin catch
 	rollback tran IslemControl
-	print 'Yapılan İşlemler Geri Alındı.'
+	print 'YapÃ½lan ÃÃ¾lemler Geri AlÃ½ndÃ½.'
 end catch
 
 end
 
 
-exec DoktorlarInsertIslemi 'Mustafa','Yıldız'
+exec DoktorlarInsertIslemi 'Mustafa','YÃ½ldÃ½z'
 
-exec DoktorlarUpdateIslemi 2,'Selim','Yılmaz'
+exec DoktorlarUpdateIslemi 2,'Selim','YÃ½lmaz'
 
 exec DoktorlarDeleteIslemi 2
 
@@ -205,15 +195,12 @@ alter view Departman
 as
 select Id,Name,IsDelete from Departmen
 
---insert işlemi için proc oluşturuldu
 create proc DepartmanInsertIslemi
 @DepartmanName nvarchar(200)
 as
 begin
 
---Hata ayıklamak için try catch kullanıldı.
 begin try
---İşlemde hata oluşursa geri almak için tran kullanıldı.
 begin tran IslemControl
 
 	insert into Departman([Name]) 
@@ -225,7 +212,7 @@ commit tran IslemControl
 end try
 begin catch
 	rollback tran IslemControl
-	print 'Yapılan İşlemler Geri Alındı.'
+	print 'YapÃ½lan ÃÃ¾lemler Geri AlÃ½ndÃ½.'
 end catch
 
 end
@@ -245,24 +232,23 @@ begin
 	update Departman set Name=@DepartmanName
 	where Id=@DepartmanId 
 
-	print 'Departman Bilgileri Güncellendi.'
+	print 'Departman Bilgileri GÃ¼ncellendi.'
 
 end
 else
 begin
-    print 'Güncelleme yapılmadı: Belirtilen DepartmanId değeri mevcut değil.'
+    print 'GÃ¼ncelleme yapÃ½lmadÃ½: Belirtilen DepartmanId deÃ°eri mevcut deÃ°il.'
 end
 
 commit tran IslemControl
 end try
 begin catch
 	rollback tran IslemControl
-	print 'Yapılan İşlemler Geri Alındı.'
+	print 'YapÃ½lan ÃÃ¾lemler Geri AlÃ½ndÃ½.'
 end catch
 
 end
 
---Delete işlemi için proc oluşturuldu
 alter proc DepartmanDeleteIslemi
 @DepartmanId int
 as
@@ -278,19 +264,19 @@ begin
 end
 else
 begin
-    print 'Silme yapılmadı: Belirtilen DepartmanId değeri mevcut değil.'
+    print 'Silme yapÃ½lmadÃ½: Belirtilen DepartmanId deÃ°eri mevcut deÃ°il.'
 end
 
 commit tran IslemControl
 end try
 begin catch
 	rollback tran IslemControl
-	print 'Yapılan İşlemler Geri Alındı.'
+	print 'YapÃ½lan ÃÃ¾lemler Geri AlÃ½ndÃ½.'
 end catch
 end
 
 
-exec DepartmanInsertIslemi 'Kulak Burun Boğaz'
+exec DepartmanInsertIslemi 'Kulak Burun Bogaz'
 
 exec DepartmanUpdateIslemi 2,'Genel Cerrahi'
 
@@ -301,17 +287,13 @@ create view DoktorDepartman
 as
 select Id,DepartmentId,DoctorId,IsDelete from DoctorDepartmen
 
-
---insert işlemi için proc oluşturuldu
 alter proc DoktorDepartmanInsertIslemi
 @DepartmanId int,
 @DoktorId int
 as
 begin
 
---Hata ayıklamak için try catch kullanıldı.
 begin try
---İşlemde hata oluşursa geri almak için tran kullanıldı.
 begin tran IslemControl
 
 if exists (select 1 from Departman where Departman.Id=@DepartmanId)
@@ -327,24 +309,23 @@ begin
     end
     else
     begin
-        print 'Ekleme yapılmadı: Belirtilen DoktorId değeri mevcut değil.';
+        print 'Ekleme yapÃ½lmadÃ½: Belirtilen DoktorId deÃ°eri mevcut deÃ°il.';
     end
 end
 else
 begin
-    print 'Ekleme yapılmadı: Belirtilen DepartmanId değeri mevcut değil.';
+    print 'Ekleme yapÃ½lmadÃ½: Belirtilen DepartmanId deÃ°eri mevcut deÃ°il.';
 end
 
 commit tran IslemControl
 end try
 begin catch
 	rollback tran IslemControl
-	print 'Yapılan İşlemler Geri Alındı.'
+	print 'YapÃ½lan ÃÃ¾lemler Geri AlÃ½ndÃ½.'
 end catch
 
 end
 
---Güncelleme işlemi için proc oluşturuldu
 alter proc DoktorDepartmanUpdateIslemi
 @DoktorDepartmanId int,
 @DepartmanId int,
@@ -362,27 +343,25 @@ begin
         set DoctorId=@DoktorId, DepartmentId=@DepartmanId
         where Id=@DoktorDepartmanId;
 
-        print 'Doktor Departman Bilgileri Güncellendi.'
+        print 'Doktor Departman Bilgileri GÃ¼ncellendi.'
     end
     else
     begin
-        print 'Güncelleme yapılmadı: Belirtilen DoktorId değeri mevcut değil.';
+        print 'GÃ¼ncelleme yapÃ½lmadÃ½: Belirtilen DoktorId deÃ°eri mevcut deÃ°il.';
     end
 end
 else
 begin
-    print 'Güncelleme yapılmadı: Belirtilen DepartmanId değeri mevcut değil.';
+    print 'GÃ¼ncelleme yapÃ½lmadÃ½: Belirtilen DepartmanId deÃ°eri mevcut deÃ°il.';
 end
 commit tran IslemControl
 end try
 begin catch
 	rollback tran IslemControl
-	print 'Yapılan İşlemler Geri Alındı.'
+	print 'YapÃ½lan ÃÃ¾lemler Geri AlÃ½ndÃ½.'
 end catch
 end
 
-
---Delete işlemi için proc oluşturuldu
 alter proc DoktorDepartmanDeleteIslemi
 @DoktorDepartmanId int
 as
@@ -397,13 +376,13 @@ begin
 end
 else
 begin
-    print 'Silme yapılmadı: Belirtilen DoktorDepartmanId değeri mevcut değil.';
+    print 'Silme yapÃ½lmadÃ½: Belirtilen DoktorDepartmanId deÃ°eri mevcut deÃ°il.';
 end
 commit tran IslemControl
 end try
 begin catch
 	rollback tran IslemControl
-	print 'Yapılan İşlemler Geri Alındı.'
+	print 'YapÃ½lan ÃÃ¾lemler Geri AlÃ½ndÃ½.'
 end catch
 end
 
@@ -414,12 +393,10 @@ exec DoktorDepartmanUpdateIslemi 3,1,2
 
 exec DoktorDepartmanDeleteIslemi 9
 
---HastaRandavu view i oluşturuldu
 create view HastaRandavu
 as
 select Id,DepartmentId,DoctorId,PatientId,[Date],[Hour],IsStatus,IsDelete from PatientAppointment
 
---İnsert işlemi için proc oluşturuldu
 alter proc HastaRandavuInserIslemi
     @DepartmanId int,
     @DoktorId int,
@@ -428,15 +405,13 @@ alter proc HastaRandavuInserIslemi
     @SecilenSaat time
 as
 begin
-    -- Hata ayıklamak için try-catch kullanıldı.
     begin try
 		    if @SecilenSaat<'09:00:00' or @SecilenSaat>'17:00:00'
 				begin
-					print 'Randevu saatleri dışında seçim yaptınız.'
+					print 'Randevu saatleri dÃ½Ã¾Ã½nda seÃ§im yaptÃ½nÃ½z.'
 				end
         else
 		begin
-		-- İşlemde hata oluşursa geri almak için transaction kullanıldı.
         begin tran IslemControl
         if exists (select 1 from DoktorDepartman where DoktorDepartman.DepartmentId=@DepartmanId)
         begin
@@ -482,34 +457,34 @@ begin
                             begin
                                 insert into HastaRandavu (PatientId, DoctorId, DepartmentId, [Date], [Hour])
                                 values (@HastaId, @DoktorId, @DepartmanId, @Tarih, @EnYakinBosSaat)
-                                print 'Seçilen saat dolu. Randavu '+cast(@EnYakinBosSaat as nvarchar(8))+' saatine oluşturuldu.'
+                                print 'SeÃ§ilen saat dolu. Randavu '+cast(@EnYakinBosSaat as nvarchar(8))+' saatine oluÃ¾turuldu.'
                             end
                             else
                             begin
-                                print 'Seçilen saat dolu ve sonraki uygun boş saat bulunamadı.'
+                                print 'SeÃ§ilen saat dolu ve sonraki uygun boÃ¾ saat bulunamadÃ½.'
                             end
                         end
                         else
                         begin
                             insert into HastaRandavu (PatientId, DoctorId, DepartmentId, [Date], [Hour])
                             values (@HastaId, @DoktorId, @DepartmanId, @Tarih, @SecilenSaat)
-                            print 'Randevu başarıyla oluşturuldu.'
+                            print 'Randevu baÃ¾arÃ½yla oluÃ¾turuldu.'
                         end
                     end
                 end
                 else
                 begin
-                    print 'Ekleme yapılmadı: Belirtilen HastaId değeri mevcut değil.'
+                    print 'Ekleme yapÃ½lmadÃ½: Belirtilen HastaId deÃ°eri mevcut deÃ°il.'
                 end
             end
             else
             begin
-                print 'Ekleme yapılmadı: Belirtilen DoktorId değeri mevcut değil.'
+                print 'Ekleme yapÃ½lmadÃ½: Belirtilen DoktorId deÃ°eri mevcut deÃ°il.'
             end
         end
         else
         begin
-            print 'Ekleme yapılmadı: Belirtilen DepartmanId değeri mevcut değil.'
+            print 'Ekleme yapÃ½lmadÃ½: Belirtilen DepartmanId deÃ°eri mevcut deÃ°il.'
         end
 
         commit tran IslemControl
@@ -517,11 +492,10 @@ begin
     end try
     begin catch
         rollback tran IslemControl
-        print 'Yapılan İşlemler Geri Alındı.'
+        print 'YapÃ½lan ÃÃ¾lemler Geri AlÃ½ndÃ½.'
     end catch
 end
 
---Güncelleme işlemi için proc oluşturuldu
 alter proc HastaRandavuUpdateIslemi
 @HastaRandavuId int,
 @DepartmanId int,
@@ -531,15 +505,13 @@ alter proc HastaRandavuUpdateIslemi
 @SecilenSaat time
 as
 begin
-  -- Hata ayıklamak için try-catch kullanıldı.
     begin try
 		    if @SecilenSaat<'09:00:00' or @SecilenSaat>'17:00:00'
 				begin
-					print 'Randevu saatleri dışında seçim yaptınız.'
+					print 'Randevu saatleri dÃ½Ã¾Ã½nda seÃ§im yaptÃ½nÃ½z.'
 				end
         else
 		begin
-		-- İşlemde hata oluşursa geri almak için transaction kullanıldı.
         begin tran IslemControl
         if exists (select 1 from DoktorDepartman where DoktorDepartman.DepartmentId=@DepartmanId)
         begin
@@ -579,33 +551,33 @@ begin
                             begin
                                 update HastaRandavu set PatientId=@HastaId, DoctorId=@DoktorId, DepartmentId=@DepartmanId, [Date]=@Tarih, [Hour]=@EnYakinBosSaat 
 								where HastaRandavu.Id=@HastaRandavuId
-                                print 'Seçilen saat dolu. Randavu '+cast(@EnYakinBosSaat as nvarchar(8))+' saatine güncellendi.'
+                                print 'SeÃ§ilen saat dolu. Randavu '+cast(@EnYakinBosSaat as nvarchar(8))+' saatine gÃ¼ncellendi.'
                             end
                             else
                             begin
-                                print 'Seçilen saat dolu ve sonraki uygun boş saat bulunamadı.'
+                                print 'SeÃ§ilen saat dolu ve sonraki uygun boÃ¾ saat bulunamadÃ½.'
                             end
                         end
                         else
                         begin
                             update HastaRandavu set PatientId=@HastaId, DoctorId=@DoktorId, DepartmentId=@DepartmanId, [Date]=@Tarih, [Hour]=@SecilenSaat 
 						    where HastaRandavu.Id=@HastaRandavuId
-                            print 'Randevu başarıyla güncellendi.'
+                            print 'Randevu baÃ¾arÃ½yla gÃ¼ncellendi.'
                         end
                     end
                 else
                 begin
-                    print 'Güncelleme yapılmadı: Belirtilen HastaId değeri mevcut değil.'
+                    print 'GÃ¼ncelleme yapÃ½lmadÃ½: Belirtilen HastaId deÃ°eri mevcut deÃ°il.'
                 end
             end
             else
             begin
-                print 'Güncelleme yapılmadı: Belirtilen DoktorId değeri mevcut değil.'
+                print 'GÃ¼ncelleme yapÃ½lmadÃ½: Belirtilen DoktorId deÃ°eri mevcut deÃ°il.'
             end
         end
         else
         begin
-            print 'Güncelleme yapılmadı: Belirtilen DepartmanId değeri mevcut değil.'
+            print 'GÃ¼ncelleme yapÃ½lmadÃ½: Belirtilen DepartmanId deÃ°eri mevcut deÃ°il.'
         end
 
         commit tran IslemControl
@@ -613,12 +585,10 @@ begin
     end try
 begin catch
 	rollback tran IslemControl
-	print 'Yapılan İşlemler Geri Alındı.'
+	print 'YapÃ½lan ÃÃ¾lemler Geri AlÃ½ndÃ½.'
 end catch
 end
 
-
---Delete işlemi için proc oluşturuldu
 alter proc HastaRandavuDeleteIslemi
 @HastaRandavuId int
 as
@@ -633,13 +603,13 @@ begin
 end
 else
 begin
-    print 'Silme yapılmadı: Belirtilen HastaRandavuId değeri mevcut değil.'
+    print 'Silme yapÃ½lmadÃ½: Belirtilen HastaRandavuId deÃ°eri mevcut deÃ°il.'
 end
 commit tran IslemControl
 end try
 begin catch
 	rollback tran IslemControl
-	print 'Yapılan İşlemler Geri Alındı.'
+	print 'YapÃ½lan ÃÃ¾lemler Geri AlÃ½ndÃ½.'
 end catch
 end
 
